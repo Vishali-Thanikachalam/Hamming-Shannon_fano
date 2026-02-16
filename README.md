@@ -7,17 +7,51 @@ Calculate the average code word length, entropy, variance, redundancy, and effic
 # Tools Required:
 # Program:
 ```
-Write the program 
+import heapq
+import math
+
+p = [0.4, 0.19, 0.16, 0.15, 0.15]
+
+# Create min heap
+heap = [[weight, [symbol, ""]] for symbol, weight in enumerate(p)]
+heapq.heapify(heap)
+
+while len(heap) > 1:
+    lo = heapq.heappop(heap)
+    hi = heapq.heappop(heap)
+    for pair in lo[1:]:
+        pair[1] = '0' + pair[1]
+    for pair in hi[1:]:
+        pair[1] = '1' + pair[1]
+    heapq.heappush(heap, [lo[0] + hi[0]] + lo[1:] + hi[1:])
+
+huffman_codes = sorted(heap[0][1:], key=lambda x: x[0])
+
+# Extract lengths
+lk = [len(code[1]) for code in huffman_codes]
+
+# Calculations
+L = sum(p[i] * lk[i] for i in range(len(p)))
+H = sum(p[i] * math.log2(1/p[i]) for i in range(len(p)))
+eff = H / L
+red = 1 - eff
+var = sum(p[i] * (lk[i] - L)**2 for i in range(len(p)))
+
+print("Code lengths:", lk)
+print("Average Length:", round(L,3))
+print("Entropy:", round(H,3))
+print("Efficiency:", round(eff,3))
+print("Redundancy:", round(red,3))
+print("Variance:", round(var,3))
+ 
 ```
 # Calculation:
 ```
-Compare the manually calculated value and the observed practical value.
+
 ```
 # Output
-```
-Attach the Output waveform
-``` 
+
+<img width="1500" height="683" alt="image" src="https://github.com/user-attachments/assets/a95057df-5a22-496a-bb46-d4ff753bff96" />
+ 
 # Results:
-```
-Write the conclusion
-```
+The Huffman and Shannon-Fano of the given statistics {0.125, 0.0625, 0.25, 0.0625, 0.125, 0.125, 0.25} using python are verified.
