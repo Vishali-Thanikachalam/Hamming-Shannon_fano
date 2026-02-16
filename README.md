@@ -37,7 +37,7 @@ H = sum(p[i] * math.log2(1/p[i]) for i in range(len(p)))
 eff = H / L
 red = 1 - eff
 var = sum(p[i] * (lk[i] - L)**2 for i in range(len(p)))
-
+print("Probability:", p)
 print("Code lengths:", lk)
 print("Average Length:", round(L,3))
 print("Entropy:", round(H,3))
@@ -53,7 +53,7 @@ print("Variance:", round(var,3))
 
 # Output
 
-<img width="1500" height="683" alt="image" src="https://github.com/user-attachments/assets/a95057df-5a22-496a-bb46-d4ff753bff96" />
- 
+<img width="1636" height="725" alt="image" src="https://github.com/user-attachments/assets/5adb1aa9-624d-4cb5-a5ff-9107cb0b44e2" />
+
 # Results:
 The Huffman and Shannon-Fano of the given statistics {0.125, 0.0625, 0.25, 0.0625, 0.125, 0.125, 0.25} using python are verified.
